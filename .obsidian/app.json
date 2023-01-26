@@ -1,0 +1,22 @@
+{
+  "pdfExportSettings": {
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "spellcheckDictionary": [
+    "adb",
+    "HttpToolkit",
+    "Incapsula",
+    "Wakanim",
+    "Holz",
+    "Wakanim",
+    "Frida[^frida",
+    "pinning[^defeat-ssl-pinning",
+    "getResponseCodeMethod",
+    "Ghidra",
+    "libsanitizer",
+    "EXTending"
+  ]
+}

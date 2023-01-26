@@ -1,0 +1,219 @@
+{
+  "main": {
+    "id": "e3ab835efa4c8841",
+    "type": "split",
+    "children": [
+      {
+        "id": "88dbd8323286951b",
+        "type": "tabs",
+        "dimension": 52.55474452554745,
+        "children": [
+          {
+            "id": "14b7d498b474d623",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "(Decompiled) libsanitizer.so - process().md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "018710a010d2e3d1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "JNI specification - functions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a1c05c6510d852a3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "(Reconstructed in C) libsanitizer.so - process().md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 2
+      },
+      {
+        "id": "9d25c72bff5203a4",
+        "type": "tabs",
+        "dimension": 47.44525547445255,
+        "children": [
+          {
+            "id": "f6d1776a05974f9b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "(Decompiled) libsanitizer.so - process().md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5f33727696ff2e01",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7b671945bb1b917c",
+    "type": "split",
+    "children": [
+      {
+        "id": "ee801ebc8d869486",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "94de14d0ad08c633",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0d862c218cb28b64",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "uint64",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "3f8b4bf71fee7464",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 231.5
+  },
+  "right": {
+    "id": "05f2278160854253",
+    "type": "split",
+    "children": [
+      {
+        "id": "51e3f397af01fb2c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6426f2884c835ed0",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "(Reconstructed in C) libsanitizer.so - process().md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "21b1b7c9f4bc294a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "(Reconstructed in C) libsanitizer.so - process().md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "42bb1072cc67e0d8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "f4bafe9f86794fdd",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "(Reconstructed in C) libsanitizer.so - process().md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Schnellauswahl öffnen": false,
+      "graph:Graphen-Ansicht öffnen": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Heutige Notiz öffnen": false,
+      "templates:Vorlage einfügen": false,
+      "command-palette:Befehlspalette öffnen": false,
+      "markdown-importer:Markdown Importprogramm öffnen": false
+    }
+  },
+  "active": "94de14d0ad08c633",
+  "lastOpenFiles": [
+    "(Decompiled) libsanitizer.so - process().md",
+    "JNI specification - functions.md",
+    "(Reconstructed in C) libsanitizer.so - process().md",
+    "README.md",
+    "Pasted image 20230124233942.png",
+    "decompiled_libsanitizer.so.md",
+    "README.pdf",
+    "Unbenannt.canvas"
+  ]
+}

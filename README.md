@@ -423,7 +423,7 @@ and
 
 [^vsprintf]: https://github.com/torvalds/linux/blob/master/lib/vsprintf.c
 
-So exactly what we expected. With that information we can actually reconstruct the whole process function and after that, we're left with something like [[|this]]
+So exactly what we expected. With that information we can actually reconstruct the whole process function and after that, we're left with something like [[(Reconstructed in C) libsanitizer.so - process()|this]]
 
 ### Troubleshooting
 

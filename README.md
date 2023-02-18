@@ -423,7 +423,7 @@ and
 
 [^vsprintf]: https://github.com/torvalds/linux/blob/master/lib/vsprintf.c
 
-So exactly what we expected. With that information we can actually reconstruct the whole process function and after that, we're left with something like [[(Reconstructed in C) libsanitizer.so - process()|this]]
+So exactly what we expected. With that information, we can actually reconstruct the whole process function and after that, we're left with something like [[(Reconstructed in C) libsanitizer.so - process()|this]]. And because it is almost exclusively calls Java code via the JNI, writing it in Java as well wasn't that hard, if you want to look at it, you can find it here
 
 ### Troubleshooting
 

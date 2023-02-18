@@ -1,5 +1,3 @@
-```c
-
 undefined8
 Java_com_wakanim_wakanimapp_test_wakanimWebclient_WakanimWebClient_process
           (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
@@ -323,5 +321,3 @@ LAB_00103510:
                     /* WARNING: Subroutine does not return */
   __stack_chk_fail();
 }
-
-```

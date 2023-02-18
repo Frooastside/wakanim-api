@@ -12,13 +12,13 @@ Wakanim does not use a real API on the web version and instead, all the content 
 
 - Windows (not strictly required, but some tools I used are only available on Windows.)
 - [Android Studio](https://developer.android.com/studio) with Emulator installed
-> [!WARNING]
+> **Warning**
 > Make sure you use a Google APIs Image instead of Google Play Store image because getting root on one of these requires additional steps.
 - Wakanim App installed on the Emulator
-> [!INFO]
+> **Note**
 > Without the Google Play Store, you can get the App from your regular Android phone or online from something like [APK Mirror](https://www.apkmirror.com/apk/wakanim-production/wakanim/)
 - Android debug bridge (ADB) binaries
-> [!INFO]
+> **Note**
 > These binaries get shipped with Android Studio and on Windows you usually can find them in `%localappdata%/Android/Sdk/platform-tools` 
 - Network Traffic analyzer like [Fiddler](https://www.telerik.com/download/fiddler) or [HttpToolkit](https://httptoolkit.com/) (I used Fiddler and the Tutorial expects you to use it if you want to follow.)
 - [Byte Code Viewer](https://github.com/Konloch/bytecode-viewer/releases)
@@ -28,11 +28,11 @@ Wakanim does not use a real API on the web version and instead, all the content 
 
 I at first attempted to just look at all the API requests using a program like Fiddler Classic or HttpToolkit while having the app open on the android emulator. I decided to use Fiddler, but to use it with external devices or in this case the Android emulator, I had to enable it in the Fiddler Settings: `Tools > Options... > Connections > Allow remote computers to connect`. After that, I just set up the emulator to use the proxy with the local IP address "10.0.2.2", and the default fiddler proxy port "8888".
 
-> [!TIP]
+> **Note**
 > The IP address "10.0.2.2" is used in the Android Emulator to always represent the host computer, where in my case, Fiddler is running.
 
-> [!INFO]
-> If you have problems settings up the Proxy with your android emulator, or it simply does not work, check out [[#Wakanim API#Manually setting the Proxy of the Android Emulator| Setup a proxy with your emulator]]
+> **Note**
+> If you have problems settings up the Proxy with your android emulator, or it simply does not work, check out [Setup a proxy with your emulator](#manually-setting-the-proxy-of-the-android-emulator)
 
 Only doing that just allowed me to analyze unsecured HTTP traffic, but the App uses HTTPS. Fiddler has the capability to decrypt HTTPS traffic, but it is not enabled by default. I enabled it in here: `Tools > Options... > HTTPS > Decrypt HTTPS traffic`. Fiddler then generates a certificate that is used to sign the messages that the Android emulator receives. But because everybody could generate such a certificate, the emulator does not trust it yet. Fixing that, was as simple as, exporting the certificate via `Tools > Options... > HTTPS > Actions > Export Root Certificate to Desktop`, then copying it via
 
@@ -42,7 +42,7 @@ adb push %userprofile%/Desktop/FiddlerRoot.cer /sdcard/FiddlerRoot.cer
 
 And on the emulator, installing it in the file explorer by clicking on it. I then checked if it is installed in the settings app under `Security & location > Advanced > Encryption & credentials > Trusted credentials > User`. However, I was still not finished yet, because starting with Android 5, user installed certificates are not trusted by default and to work with all apps, is has to be in the "System" Tab instead. Since Android 11, this gets even more enforced[^android-11-certificates].
 
-> [!INFO]
+> **Note**
 > Make sure you select "Apps and VPN" in the installation step or it will not be in the required directory.
 
 [^android-11-certificates]: https://httptoolkit.com/blog/android-11-trust-ca-certificates/
@@ -55,7 +55,7 @@ User installed certificates are located under `/data/misc/user/0/cacerts-added/<
 %localappdata%/Android/Sdk/emulator/emulator.exe -writable-system -avd <AVD Name>
 ```
 
-> [!TIP]
+> **Note**
 > You can get a list of available AVDs (Android Virtual Device) with:
 >```bash
 > %localappdata%/Android/Sdk/emulator/emulator.exe -list-avds
@@ -66,7 +66,7 @@ Then in the last step, I copied the only file in `/data/misc/user/0/cacerts-adde
 adb shell cp /data/misc/user/0/cacerts-added/<hash>.o /system/etc/security/cacerts/
 ```
 
-> [!TIP]
+> **Note**
 > You can get the name of the certificate found in `/data/misc/user/0/cacerts/` by using
 >```bash
 > adb shell ls /data/misc/user/0/cacerts-added/
@@ -186,7 +186,7 @@ setTimeout(() =>  {
 }, 0);
 ```
 
-> [!TIP]
+> **Note**
 > You pretty much can do this with every function you find with the decompiler, and that with only some slight modifications. I will continue using this with modifications without providing the exact source of it.
 
 The main reason I hooked the function was that I wasn't sure what the third argument was. After executing it and trying to log in, we see something that looks like we would expect the missing body of the token endpoint would look like (Modified for readability):
@@ -221,7 +221,7 @@ public j a(String... var1) {
 }
 ```
 
-> [!TIP]
+> **Note**
 > When working with decompiled code it is good to know that,
 > 1. the standard java HTTP implementation lets you write the request body between connection.connect() and calling any response related method, like in this case the getResponseCode() method
 > 1. the java compiler is simplifying a lot of stuff if more information is not required and in this case, it is also obfuscated which makes working with it more unpleasant
@@ -242,7 +242,7 @@ public Response makeRequest(String requestBody) {
 }
 ```
 
-So that is the last proof that we actually need to tackle the native lib. But what lib? Finding that out was pretty easy, because in the constructor of the `WakanimWebClient` class, there is this expression `System.loadLibrary("sanitizer");` and inside the APK there are multiple versions (for the different architectures) of the file `libsanitizer.so` I used Ghidra for the analysis of the library, but you can also use other Tools like IDA. The library exports a lot of functions, but the one that we're interested in is obviously `Java_com_wakanim_wakanimapp_test_wakanimWebclient_WakanimWebClient_process`. Ghidra can reconstruct C code from the assembly, and I started by looking at the function declaration:
+So that is the last proof that we actually need to tackle the native lib. But what lib? Finding that out was pretty easy, because in the constructor of the `WakanimWebClient` class, there is this expression `System.loadLibrary("sanitizer");` and inside the APK there are multiple versions (for the different architectures) of the file `libsanitizer.so` I used Ghidra for the analysis of the library, but you can also use other Tools like IDA. The library exports a lot of functions, but the one that we're interested in is obviously `Java_com_wakanim_wakanimapp_test_wakanimWebclient_WakanimWebClient_process`. Ghidra can reconstruct C code from the assembly, and I started by looking at the function declaration in the [decompiled C code](./decompiled_libsanitizer.process.c):
 
 #### (Reconstructed) libsanitizer.so → process
 ```c
@@ -279,7 +279,6 @@ Ok first let's replace `undefined8` with the appropriate data type, an unsigned 
 
 But that still leaves us with 5 instead of the 3 parameters we would expect, right? Actually no, because the used JNI (Java Native Interface) specification states:
 
-> [!QUOTE]
 > The JNI interface pointer is the first argument to native methods. The JNI interface pointer is of type _JNIEnv_. The second argument differs depending on whether the native method is static or nonstatic. The second argument to a nonstatic native method is a reference to the object. The second argument to a static native method is a reference to its Java class.[^jni-specification-design]
 
 [^jni-specification-design]: https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/design.html
@@ -334,12 +333,11 @@ uVar6 = (**(code **)(*param_9 + 0x30))(param_9,"java/net/URLConnection");
 
 `uVar6` Got initialized in the first section of the function and is of the type `uint64`. `(**(code **)(*param_9 + 0x30))` also looks complicated but is actually just a fancy way to say: "give me the function at an offset of 0x30 of `param_9` (the JNI environment as we found out earlier)". You might ask: "what function is at an offset of 0x30?". That's a good question, and the answer can again be found in the JNI specifications:
 
-> [!QUOTE]
 > Each function is accessible at a fixed offset through the _JNIEnv_ argument. The _JNIEnv_ type is a pointer to a structure storing all JNI function pointers.
 > 
 > The VM initializes the function table, as shown by [Code Example 4-1](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html#wp2556).
 
-That means you can just take the offset, as an example we take the 0x30 from above, convert it to decimal (48), device it by 8 (6), and just take the 7th (don't forget counting from 0) function from the [[JNI specification - functions|functions object]], in this case `FindClass`.
+That means you can just take the offset, as an example we take the 0x30 from above, convert it to decimal (48), device it by 8 (6), and just take the 7th (don't forget counting from 0) function from the [JNI specification](./jni_spec.c), in this case `FindClass`.
 
 So in the end, we can simplify the code from above into:
 
@@ -411,19 +409,17 @@ __vsprintf_chk(local_118, 0, 100, "%s%s%s", [uVar11, uVar12, uVar13]);
 
 And guess what that functions does:
 
-> [!QUOTE]
 > The interface __vsprintf_chk() shall function in the same way as the interface vsprintf(), except that __vsprintf_chk() shall check for stack overflow before computing a result.[^__vsprintf_chk]
 
 [^__vsprintf_chk]: https://refspecs.linuxbase.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/libc---vsprintf-chk-1.html
 
 and
 
-> [!QUOTE]
 > vsprintf - Format a string and place it in a buffer[^vsprintf]
 
 [^vsprintf]: https://github.com/torvalds/linux/blob/master/lib/vsprintf.c
 
-So exactly what we expected. With that information, we can actually reconstruct the whole process function and after that, we're left with something like [[(Reconstructed in C) libsanitizer.so - process()|this]]. And because it is almost exclusively calls Java code via the JNI, writing it in Java as well wasn't that hard, if you want to look at it, you can find it here
+So exactly what we expected. With that information, we can actually reconstruct the whole process function and after that, we're left with something like [this](./reconstructed_libsanitizer.process.c). And because it is almost exclusively calls Java code via the JNI, writing it in Java as well wasn't that hard, if you want to look at it, you can find it [here](./WakanimWebClient.java)
 
 ### Troubleshooting
 

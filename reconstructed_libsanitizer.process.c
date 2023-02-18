@@ -1,4 +1,3 @@
-```c
 long WakanimWebClient_process(long* environment, long wakanimWebClientClass, long requestBody, long connection, long trustManager) {
 	if (trustManager == 0) {
 		return -1;
@@ -159,4 +158,3 @@ long WakanimWebClient_process(long* environment, long wakanimWebClientClass, lon
 		return -1;
 	}
 }
-```

@@ -1,0 +1,1165 @@
+openapi: 3.1.0
+x-stoplight:
+  id: k8lhne2bfd5ui
+info:
+  title: Wakanim
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://account.wakanim.tv/api'
+    description: API Endpoint
+  - url: 'http://account.wakanim.tv/core'
+    description: Core Endpoint
+paths:
+  /user:
+    get:
+      summary: User Information
+      tags: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  $id:
+                    type: string
+                  public:
+                    type: object
+                    properties:
+                      $id:
+                        type: string
+                      userId:
+                        type: string
+                      displayName:
+                        type: string
+                      privacySettings:
+                        type: string
+                      preferedLanguage:
+                        type: string
+                      timezone:
+                        type: integer
+                      enableDaylight:
+                        type: boolean
+                      fromWebsiteId:
+                        type: integer
+                      validatedUser:
+                        type: boolean
+                      createdDate:
+                        type: string
+                      lastModifiedDate:
+                        type: string
+                      lastModifiedBy:
+                        type: string
+                      avatar:
+                        type: string
+                      twitter:
+                        type: string
+                      website:
+                        type: string
+                      facebook:
+                        type: string
+                      googlePlus:
+                        type: string
+                      status:
+                        type: string
+                      country:
+                        type: integer
+                      disablePublicPage:
+                        type: boolean
+                      disableFromSearch:
+                        type: boolean
+                      disableAddFriend:
+                        type: boolean
+                      disableSendPrivateMessage:
+                        type: boolean
+                      disabledAccount:
+                        type: boolean
+                      lastActivityDate:
+                        type: string
+                      birthday:
+                        type: string
+                      gender:
+                        type: integer
+                      promoCampaign:
+                        type: 'null'
+                      v2_AdvertTag:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_AdvertTag1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_Articles:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ArticlesRelated:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ArticlesRelated1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingPlan:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingPlan1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingSourceCard:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingSourceCard1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingTaxRate:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingTaxRate1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingTaxRateHistory:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingTaxRule:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingTaxRule1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_BillingTaxRuleHistory:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ContestPhysicalAddress:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_Podcast_Following:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ROGroup:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ROGroup1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ShowEpisodeItemBought:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_ShowItem_Following:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_SmsCode:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_SmsCode1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_StripePaymentSource:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_StripePaymentSource1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_UserNote:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_UserNote1:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      v2_UserNote2:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      secret:
+                        type: string
+                  accountType:
+                    type: integer
+                  svodEndDateUtc:
+                    type: 'null'
+                  trialEndDateUtc:
+                    type: 'null'
+                  isSVODAvailable:
+                    type: boolean
+                  isTrialAvailable:
+                    type: boolean
+                  isoCode:
+                    type: string
+                  isModerator:
+                    type: boolean
+                  isEventPartner:
+                    type: boolean
+                  userHasBought:
+                    type: boolean
+                  notifCountUnseen:
+                    type: integer
+                  isLocked:
+                    type: boolean
+                  secret:
+                    type: string
+                  apiLongToken:
+                    type: string
+                x-examples:
+                  Example 1:
+                    $id: '1'
+                    public:
+                      $id: '2'
+                      userId: 9df383b8-7977-4f0a-bfc9-775d76dc1c20
+                      displayName: Eclipse9915
+                      privacySettings: ''
+                      preferedLanguage: de
+                      timezone: 60
+                      enableDaylight: true
+                      fromWebsiteId: 3
+                      validatedUser: true
+                      createdDate: '2022-12-25T23:28:11.007'
+                      lastModifiedDate: '2022-12-25T23:28:11.007'
+                      lastModifiedBy: 9df383b8-7977-4f0a-bfc9-775d76dc1c20
+                      avatar: ''
+                      twitter: ''
+                      website: ''
+                      facebook: ''
+                      googlePlus: ''
+                      status: Wakanim !
+                      country: 80
+                      disablePublicPage: false
+                      disableFromSearch: false
+                      disableAddFriend: false
+                      disableSendPrivateMessage: false
+                      disabledAccount: false
+                      lastActivityDate: '2022-12-25T23:28:11.007'
+                      birthday: '1900-01-01T00:00:00'
+                      gender: 0
+                      promoCampaign: null
+                      v2_AdvertTag: []
+                      v2_AdvertTag1: []
+                      v2_Articles: []
+                      v2_ArticlesRelated: []
+                      v2_ArticlesRelated1: []
+                      v2_BillingPlan: []
+                      v2_BillingPlan1: []
+                      v2_BillingSourceCard: []
+                      v2_BillingSourceCard1: []
+                      v2_BillingTaxRate: []
+                      v2_BillingTaxRate1: []
+                      v2_BillingTaxRateHistory: []
+                      v2_BillingTaxRule: []
+                      v2_BillingTaxRule1: []
+                      v2_BillingTaxRuleHistory: []
+                      v2_ContestPhysicalAddress: []
+                      v2_Podcast_Following: []
+                      v2_ROGroup: []
+                      v2_ROGroup1: []
+                      v2_ShowEpisodeItemBought: []
+                      v2_ShowItem_Following: []
+                      v2_SmsCode: []
+                      v2_SmsCode1: []
+                      v2_StripePaymentSource: []
+                      v2_StripePaymentSource1: []
+                      v2_UserNote: []
+                      v2_UserNote1: []
+                      v2_UserNote2: []
+                      secret: 6236e60887342b389d286c914788c4884c3a9cd5
+                    accountType: 0
+                    svodEndDateUtc: null
+                    trialEndDateUtc: null
+                    isSVODAvailable: false
+                    isTrialAvailable: true
+                    isoCode: DE
+                    isModerator: false
+                    isEventPartner: false
+                    userHasBought: false
+                    notifCountUnseen: 0
+                    isLocked: false
+                    secret: 6236e60887342b389d286c914788c4884c3a9cd5
+                    apiLongToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJXYWthbmltLlRWIiwiYXVkIjoiaHR0cHM6Ly93d3cud2FrYW5pbS50diIsImV4cCI6MTY3NjMxMDY1NCwibmJmIjoxNjc0MTUwNjU0LCJpbmZvcyI6IntcIlVzZXJJZFwiOlwiOWRmMzgzYjgtNzk3Ny00ZjBhLWJmYzktNzc1ZDc2ZGMxYzIwXCIsXCJTZXNzaW9uSWRcIjpcImFwaVwiLFwiQ2xpZW50SWRcIjpcIndha2FuaW0uYW5kcm9pZC50ZXN0MlwiLFwiV2Vic2l0ZUNvdW50cnlcIjozLFwiQ291bnRyeVwiOlwiREVcIixcIklzU1ZPRFVzZXJcIjpmYWxzZSxcIkRldmljZUluZm9cIjpcIkdvb2dsZVwiLFwiSVBcIjpcIjEwNC4yOC4yNDkuMTc0XCJ9In0.mEJzIlOxMfQhuQtQU-jkNicMhQV8-FgednfJDv7E-Rs
+        '403':
+          description: Forbidden
+      operationId: get-user
+      security:
+        - API Key: []
+  /catalogue:
+    get:
+      summary: Catalogue
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    $id:
+                      type: string
+                    active:
+                      type: boolean
+                    idShowItem:
+                      type: integer
+                    allowedCountries:
+                      type: 'null'
+                    internalName:
+                      type: string
+                    name:
+                      type: string
+                    originalName:
+                      type: string
+                    availableOnPremiumDL:
+                      type: boolean
+                    availableOnPremium:
+                      type: boolean
+                    availableWithPassNoAd:
+                      type: boolean
+                    availableWithFree:
+                      type: boolean
+                    yearBroadcasting:
+                      type: integer
+                    isFinishedSimulcast:
+                      type: boolean
+                    typeOfShow:
+                      type: integer
+                    isPopularTitle:
+                      type: boolean
+                    imageUrl:
+                      type: string
+                    thumbnail:
+                      type: string
+                    metaDescription:
+                      type: string
+                    metaTitle:
+                      type: string
+                    metaType:
+                      type: integer
+                    rating:
+                      type: number
+                    ratingStory:
+                      type: number
+                    ratingAnimation:
+                      type: number
+                    ratingCharacter:
+                      type: number
+                    ratingMusic:
+                      type: number
+                    nbSeasons:
+                      type: integer
+                    seoMetaTitle:
+                      type: 'null'
+                    seoMetaDescription:
+                      type: 'null'
+                    seoOtherNames:
+                      type: 'null'
+                    seoH1:
+                      type: 'null'
+                    typeOfShowSTR:
+                      type: string
+                    orderOnHP:
+                      type: integer
+                    spotLight:
+                      type: string
+                    spotLightEnd:
+                      type: string
+                    featured:
+                      type:
+                        - 'null'
+                        - string
+                    websiteId:
+                      type: integer
+                    nbEpisodes:
+                      type: integer
+                    followedByMe:
+                      type: boolean
+                    smallSummary:
+                      type: string
+                    onlyForAdmin:
+                      type: boolean
+                    copyright:
+                      type: string
+                    displayOnDiscover:
+                      type: boolean
+                    classification:
+                      type: object
+                      properties:
+                        $id:
+                          type: string
+                        idClassification:
+                          type: integer
+                        websiteId:
+                          type: integer
+                        ageMin:
+                          type: integer
+                        everyone:
+                          type: boolean
+                        name:
+                          type: string
+                    redirectToShowItem:
+                      type: 'null'
+                    redirectToSeason:
+                      type: 'null'
+                    genres:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          $id:
+                            type: string
+                          name:
+                            type: string
+                          id:
+                            type: integer
+                          websiteId:
+                            type: integer
+                          active:
+                            type: boolean
+                          description:
+                            type: string
+                    tags:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+                    startProduction:
+                      type: string
+                    availableWithSVOD:
+                      type: boolean
+                    availableInSVODSince:
+                      type: string
+                    availableInSVODUntil:
+                      type: string
+                    excludedCountriesList:
+                      type: string
+                    keywords:
+                      type: 'null'
+                    friendlyName:
+                      type: string
+                    hideBackground:
+                      type: boolean
+                    logoUrl:
+                      type: string
+              examples: {}
+        '403':
+          description: Forbidden
+      operationId: get-catalogue
+      requestBody:
+        content: {}
+      security:
+        - API Key: []
+  /catalogue/show:
+    get:
+      summary: Show
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  $id:
+                    type: string
+                  isOnGoingShow:
+                    type: boolean
+                  seasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        $id:
+                          type: string
+                        episodes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              $id:
+                                type: string
+                              subtitles:
+                                type: 'null'
+                              title:
+                                type: string
+                              numero:
+                                type: integer
+                              nextEpisodeId:
+                                type:
+                                  - integer
+                                  - 'null'
+                              nextEpisodeActive:
+                                type: boolean
+                              previousEpisodeId:
+                                type: 'null'
+                              previousEpisodeActive:
+                                type: 'null'
+                              nextEpisodeTitle:
+                                type: 'null'
+                              nextEpisodeImageUrl:
+                                type: 'null'
+                              previousEpisodeTitle:
+                                type: 'null'
+                              previousEpisodeImageUrl:
+                                type: 'null'
+                              plannedBroadcastingUTC:
+                                type: string
+                              availableFreeStartUTC:
+                                type: string
+                              availableFreeEndUTC:
+                                type: string
+                              availablePassNoAdStartUTC:
+                                type: string
+                              availablePassNoAdEndUTC:
+                                type: string
+                              availablePremiumStartUTC:
+                                type: string
+                              availablePremiumEndUTC:
+                                type: string
+                              availableSVODStartUTC:
+                                type: string
+                              availableSVODEndUTC:
+                                type: string
+                              availableLanguages:
+                                type: string
+                              allowedCountries:
+                                type: 'null'
+                              id:
+                                type: integer
+                              url:
+                                type: string
+                              imageUrl:
+                                type: string
+                              rating:
+                                type: integer
+                              active:
+                                type: boolean
+                              activationApproved:
+                                type: boolean
+                              alreadyViewed:
+                                type: boolean
+                              playTime:
+                                type: integer
+                              duration:
+                                type: integer
+                              metaDescription:
+                                type: string
+                              shortTitle:
+                                type: string
+                              metaTitle:
+                                type: string
+                              premiumPrice:
+                                type: integer
+                              enableStreaming:
+                                type: boolean
+                              enableDownloadNoDRM:
+                                type: boolean
+                              episodePremiumDLMobile:
+                                type: 'null'
+                              episodePremiumDL720p:
+                                type: 'null'
+                              episodePremiumDL1080p:
+                                type: 'null'
+                              episodePremiumStreaming:
+                                type: 'null'
+                              episodeSVODStreaming:
+                                type: 'null'
+                              nbActivationStreaming:
+                                type: integer
+                              nbActivationDownload:
+                                type: integer
+                              episodeFreeStreaming:
+                                type: 'null'
+                              episodeNoAdStreaming:
+                                type: 'null'
+                              episodeDLFreeSD:
+                                type: 'null'
+                              episodeDLFreeHD:
+                                type: 'null'
+                              endDateBought:
+                                type: string
+                              midRollTime:
+                                type: 'null'
+                              leaps:
+                                type: 'null'
+                              parsedLeaps:
+                                type: array
+                                items:
+                                  type: object
+                                  properties: {}
+                              tags:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    $id:
+                                      type: string
+                                    id:
+                                      type: integer
+                                    name:
+                                      type: string
+                                    websiteId:
+                                      type: integer
+                                    active:
+                                      type: boolean
+                                    isIcon:
+                                      type: boolean
+                                    icon:
+                                      type:
+                                        - 'null'
+                                        - string
+                                    tooltip:
+                                      type: string
+                                    text:
+                                      type: string
+                              alreadyBought:
+                                type: boolean
+                              isDtrAvailable:
+                                type: boolean
+                              isFairplayDTRAvailable:
+                                type: boolean
+                              forceUseFree:
+                                type:
+                                  - boolean
+                                  - 'null'
+                              assetDuration:
+                                type: integer
+                              assetDurationISO8601:
+                                type: string
+                              assetDurationLongString:
+                                type: string
+                              metadata:
+                                type: 'null'
+                              isVisibleForEndUser:
+                                type: boolean
+                              nbDaysAvailableFree:
+                                type: integer
+                              nbDaysAvailableNoAd:
+                                type: integer
+                              haveFree:
+                                type: boolean
+                              progressPercentage:
+                                type: integer
+                              haveNoAds:
+                                type: boolean
+                              haveSVOD:
+                                type: boolean
+                              havePremium:
+                                type: boolean
+                              wakanimEncodingVersion:
+                                type: 'null'
+                              isMatureContent:
+                                type: boolean
+                              holdbackMinutesDL:
+                                type: 'null'
+                        nbTotalEpisodes:
+                          type: integer
+                        nbTotalEpisodesBought:
+                          type: integer
+                        nbTotalToBoughtEpisodes:
+                          type: integer
+                        percentageComplete:
+                          type: integer
+                        truePercentageComplete:
+                          type: integer
+                        priceForAuthenticatedUsers:
+                          type: integer
+                        nbTotalEpisodesToReceive:
+                          type: integer
+                        discountAppliedSeason:
+                          type: integer
+                        name:
+                          type: string
+                        shortName:
+                          type: string
+                        isARealSeason:
+                          type: boolean
+                        startDate:
+                          type: string
+                        endDate:
+                          type: string
+                        premieredSeason:
+                          type: integer
+                        premieredYear:
+                          type: integer
+                        isCatalogue:
+                          type: boolean
+                        isSimulcast:
+                          type: boolean
+                        active:
+                          type: boolean
+                        idSeason:
+                          type: integer
+                        allowToBuySeason:
+                          type: boolean
+                        packInformation:
+                          type: 'null'
+                        isArc:
+                          type: boolean
+                        totalPrice:
+                          type: integer
+                        strikedPrice:
+                          type: integer
+                        numberEpisodes:
+                          type: integer
+                        alreadyBought:
+                          type: boolean
+                        excludedCountriesList:
+                          type: 'null'
+                        enableDTR:
+                          type: boolean
+                        dtrStartDateUtc:
+                          type: string
+                        dtrEndDateUtc:
+                          type: string
+                        isDtrAvailable:
+                          type: boolean
+                        dtrExcludeCountries:
+                          type: 'null'
+                        adaptationType:
+                          type: integer
+                        isMatureContent:
+                          type: boolean
+                        posterSeason:
+                          type: 'null'
+                        startDateBroadcasting:
+                          type: string
+                        endDateBroadcasting:
+                          type: string
+                  relatedNews:
+                    type: 'null'
+                  followedByUsers:
+                    type: integer
+                  synopsis:
+                    type: string
+                  extendedInformation:
+                    type: string
+                  youtube:
+                    type: string
+                  author:
+                    type: string
+                  producer:
+                    type: string
+                  nextEpisodeId:
+                    type: integer
+                  nextEpisodeToSee:
+                    type: object
+                    properties:
+                      $id:
+                        type: string
+                      episodeId:
+                        type: integer
+                      showId:
+                        type: integer
+                      nextEpisodeId:
+                        type: integer
+                      nextEpisodeActive:
+                        type: boolean
+                      previousEpisodeId:
+                        type: integer
+                      previousEpisodeActive:
+                        type: boolean
+                      episodeNumber:
+                        type: integer
+                      title:
+                        type: string
+                      imageUrl:
+                        type: string
+                      summary:
+                        type: string
+                      playTime:
+                        type: integer
+                      duration:
+                        type: integer
+                      lastTimeViewed:
+                        type: integer
+                      tags:
+                        type: 'null'
+                      show:
+                        type: object
+                        properties:
+                          $id:
+                            type: string
+                          idShowItem:
+                            type: integer
+                          name:
+                            type: string
+                          originalName:
+                            type: string
+                          yearBroadcasting:
+                            type: integer
+                          isFinishedSimulcast:
+                            type: boolean
+                          typeOfShow:
+                            type: integer
+                          isPopularTitle:
+                            type: boolean
+                          imageUrl:
+                            type: string
+                          thumbnail:
+                            type: string
+                          metaDescription:
+                            type: string
+                          metaTitle:
+                            type: string
+                          metaType:
+                            type: integer
+                          smallSummary:
+                            type: string
+                          copyright:
+                            type: string
+                          ratingNote:
+                            type: integer
+                          nbSeasons:
+                            type: integer
+                          ratingAnimation:
+                            type: number
+                          ratingCharacter:
+                            type: number
+                          ratingMusic:
+                            type: number
+                          ratingStory:
+                            type: number
+                          featured:
+                            type: 'null'
+                          spotLight:
+                            type: string
+                          spotLightEnd:
+                            type: 'null'
+                          logoUrl:
+                            type: string
+                          hideBackground:
+                            type: boolean
+                          excludedCountriesList:
+                            type: string
+                      season:
+                        type: object
+                        properties:
+                          $id:
+                            type: string
+                          name:
+                            type: string
+                          shortName:
+                            type: string
+                          isARealSeason:
+                            type: boolean
+                          startDate:
+                            type: string
+                          endDate:
+                            type: string
+                          active:
+                            type: boolean
+                          idSeason:
+                            type: integer
+                          allowToBuySeason:
+                            type: boolean
+                          packInformation:
+                            type: 'null'
+                          isArc:
+                            type: boolean
+                          isCatalogue:
+                            type: boolean
+                          isSimulcast:
+                            type: boolean
+                          excludedCountriesList:
+                            type: 'null'
+                          dtrExcludeCountries:
+                            type: 'null'
+                          isDtrAvailable:
+                            type: boolean
+                          isFairplayDTRAvailable:
+                            type: boolean
+                          isMatureContent:
+                            type: boolean
+                          startDateBroadcasting:
+                            type: string
+                          endDateBroadcasting:
+                            type: string
+                      bought:
+                        type: boolean
+                      assetDuration:
+                        type: integer
+                      forceUseFree:
+                        type: boolean
+                      isFairplayDTRAvailable:
+                        type: boolean
+                      haveFree:
+                        type: boolean
+                      haveSVOD:
+                        type: boolean
+                      isDtrAvailable:
+                        type: boolean
+                      assetDurationISO8601:
+                        type: string
+                      assetDurationLongString:
+                        type: string
+                      metadata:
+                        type: 'null'
+                      alreadyBought:
+                        type: boolean
+                  progressNextEpisode:
+                    type: integer
+                  isContinueWatching:
+                    type: boolean
+                  isContinueWatchingNextEpisode:
+                    type: boolean
+                  chromeCastSessionToken:
+                    type: 'null'
+                  active:
+                    type: boolean
+                  idShowItem:
+                    type: integer
+                  allowedCountries:
+                    type: 'null'
+                  internalName:
+                    type: 'null'
+                  name:
+                    type: string
+                  originalName:
+                    type: string
+                  availableOnPremiumDL:
+                    type: boolean
+                  availableOnPremium:
+                    type: boolean
+                  availableWithPassNoAd:
+                    type: boolean
+                  availableWithFree:
+                    type: boolean
+                  yearBroadcasting:
+                    type: integer
+                  isFinishedSimulcast:
+                    type: boolean
+                  typeOfShow:
+                    type: integer
+                  isPopularTitle:
+                    type: boolean
+                  imageUrl:
+                    type: string
+                  thumbnail:
+                    type: string
+                  metaDescription:
+                    type: string
+                  metaTitle:
+                    type: string
+                  metaType:
+                    type: integer
+                  rating:
+                    type: number
+                  ratingStory:
+                    type: number
+                  ratingAnimation:
+                    type: number
+                  ratingCharacter:
+                    type: number
+                  ratingMusic:
+                    type: number
+                  nbSeasons:
+                    type: integer
+                  seoMetaTitle:
+                    type: string
+                  seoMetaDescription:
+                    type: string
+                  seoOtherNames:
+                    type: string
+                  seoH1:
+                    type: string
+                  typeOfShowSTR:
+                    type: string
+                  orderOnHP:
+                    type: integer
+                  spotLight:
+                    type: string
+                  spotLightEnd:
+                    type: 'null'
+                  featured:
+                    type: 'null'
+                  websiteId:
+                    type: integer
+                  nbEpisodes:
+                    type: integer
+                  followedByMe:
+                    type: boolean
+                  smallSummary:
+                    type: string
+                  onlyForAdmin:
+                    type: boolean
+                  copyright:
+                    type: string
+                  displayOnDiscover:
+                    type: 'null'
+                  classification:
+                    type: object
+                    properties:
+                      $id:
+                        type: string
+                      idClassification:
+                        type: integer
+                      websiteId:
+                        type: integer
+                      ageMin:
+                        type: integer
+                      everyone:
+                        type: boolean
+                      name:
+                        type: string
+                  redirectToShowItem:
+                    type: 'null'
+                  redirectToSeason:
+                    type: 'null'
+                  genres:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        $id:
+                          type: string
+                        name:
+                          type: string
+                        id:
+                          type: integer
+                        websiteId:
+                          type: integer
+                        active:
+                          type: boolean
+                        description:
+                          type:
+                            - 'null'
+                            - string
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  startProduction:
+                    type: string
+                  availableWithSVOD:
+                    type: boolean
+                  availableInSVODSince:
+                    type: string
+                  availableInSVODUntil:
+                    type: string
+                  excludedCountriesList:
+                    type: string
+                  keywords:
+                    type: string
+                  friendlyName:
+                    type: string
+                  hideBackground:
+                    type: boolean
+                  logoUrl:
+                    type: string
+                x-examples: null
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      operationId: get-show
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: Id
+          description: Show Id
+      security:
+        - API Key: []
+    parameters: []
+  /connect/token:
+    post:
+      summary: ''
+      operationId: post-connect-token
+      responses:
+        '200':
+          description: OK
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  default: wakanim.android.test2
+                grant_type:
+                  type: string
+                  default: password
+                response_type:
+                  type: string
+                  default: code+id_token+token
+                client_secret:
+                  type: string
+                  default: sypzbgkAPqTd9qrZ12oP
+                username:
+                  type: string
+                password:
+                  type: string
+                scope:
+                  type: string
+                  default: email+openid+profile+offline_access+read
+                redirect_uri:
+                  type: string
+                  default: 'wakanimandroidapp://callback'
+                nonce:
+                  type: string
+                  format: uuid
+                state:
+                  type: string
+                  format: uuid
+        description: ''
+components:
+  schemas: {}
+  securitySchemes:
+    API_Key:
+      type: http
+      scheme: bearer
+x-internal: false

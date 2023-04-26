@@ -444,7 +444,7 @@ when run we're left with this, the actual `client_secret` value that gets used i
 
 #### Manually setting the Proxy of the Android Emulator
 
-In my case, getting the Emulator to use a Proxy was harder than expected because it just did not want to use the proxy. I gave it in the proxy settings but, there is an easy workaround using ADB. If you type in the following command, it sets the address you provide to the global proxy of the android system.
+In my case, getting the Emulator to use a Proxy was harder than expected because it just did not want to use the proxy in the settings app. I gave it in the proxy settings but, there is an easy workaround using ADB. If you type in the following command, it sets the address you provide to the global proxy of the android system.
 
 Enable:
 ```bash

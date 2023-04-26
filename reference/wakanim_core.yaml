@@ -1,0 +1,58 @@
+openapi: 3.1.0
+x-stoplight:
+  id: r84qu01fpotds
+info:
+  title: Wakanim Core API
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://account.wakanim.tv/core'
+    description: Core Endpoint
+paths:
+  /connect/token:
+    post:
+      summary: ''
+      operationId: post-connect-token
+      responses:
+        '200':
+          description: OK
+          content: {}
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  default: wakanim.android.test2
+                grant_type:
+                  type: string
+                  default: password
+                response_type:
+                  type: string
+                  default: code+id_token+token
+                client_secret:
+                  type: string
+                  default: sypzbgkAPqTd9qrZ12oP
+                username:
+                  type: string
+                password:
+                  type: string
+                scope:
+                  type: string
+                  default: email+openid+profile+offline_access+read
+                redirect_uri:
+                  type: string
+                  default: 'wakanimandroidapp://callback'
+                nonce:
+                  type: string
+                  format: uuid
+                state:
+                  type: string
+                  format: uuid
+        description: ''
+components:
+  schemas: {}
+  securitySchemes: {}
+x-internal: false

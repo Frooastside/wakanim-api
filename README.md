@@ -419,7 +419,26 @@ and
 
 [^vsprintf]: https://github.com/torvalds/linux/blob/master/lib/vsprintf.c
 
-So exactly what we expected. With that information, we can actually reconstruct the whole process function and after that, we're left with something like [this](./reconstructed_libsanitizer.process.c). And because it is almost exclusively calls Java code via the JNI, writing it in Java as well wasn't that hard, if you want to look at it, you can find it [here](./WakanimWebClient.java)
+So exactly what we expected. With that information, we can actually reconstruct the whole process function and after that, we're left with something like [this](./reconstructed_libsanitizer.process.c). And because it is almost exclusively calls Java code via the JNI, writing it in Java as well wasn't that hard, if you want to look at it, you can find it [here](./WakanimWebClient.java). If we boil it down to what we actually need and don't have, we end up with this:
+
+```java
+  public static final byte[] DECRYPTION_KEY = { (byte) 0x01, (byte) 0x01, (byte) 0x0D, (byte) (byte) 0xF7, (byte) 0x86, (byte) 0x58, (byte) 0x86, (byte) 0x2A,
+      (byte) 0x08, (byte) 0x06, (byte) 0x0D, (byte) 0x36, (byte) 0x22, (byte) 0x05, (byte) 0x82, (byte) 0x30 };
+  public static final String FirebaseUID = "DboH6X1KLQ08RT6";
+  public static final String SecurityStoreUID = "pyumur0D+ejcXhI";
+  public static final String ActivityMetric = "/kpz++Ak9Q+ss=";
+
+
+  public static void main(String[] args) throws Exception {
+    byte[] encryptedClientSecret = Base64.decode(String.format("%s%s%s", FirebaseUID, SecurityStoreUID, ActivityMetric), 0);
+    Cipher aesInstance = Cipher.getInstance("AES");
+    aesInstance.init(2, new SecretKeySpec(DECRYPTION_KEY, "AES"));
+    String clientSecret = new String(aesInstance.doFinal(encryptedClientSecret), StandardCharsets.UTF_8);
+    System.out.println(clientSecret);
+  }
+```
+
+when run we're left with this, the actual `client_secret` value that gets used instead of `FA2P0X10`: `sypzbgkAPqTd9qrZ12oP`.
 
 ### Troubleshooting
 

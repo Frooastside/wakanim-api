@@ -449,7 +449,7 @@ So after retriving the full request body, I tried the to find out what rules we 
 **But with this endpoint you actually don't url encode any keys and for the keys only the `email`, `password` and `redirect_uri` field**. In the end it should look something like this:
 
 ```http
-POST http://account.wakanim.tv/core/connect/token HTTP/1.1
+POST https://account.wakanim.tv/core/connect/token HTTP/1.1
 Host: account.wakanim.tv
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 300
@@ -475,7 +475,7 @@ The response should be a json object that looks somthing like this:
 The refresh token allows you to request more tokens after the token expired after 21600 seconds like the request above with some small changes:
 
 ```http
-POST http://account.wakanim.tv/core/connect/token HTTP/1.1
+POST https://account.wakanim.tv/core/connect/token HTTP/1.1
 Host: account.wakanim.tv
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 300

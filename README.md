@@ -4,7 +4,7 @@ My write-up to the successful attempt to reverse engineer the Wakanim API used i
 
 ### Why the Android App?
 
-Wakanim does not use a real API on the web version and instead, all the content is rendered server side. They also use Incapsula to protect their site, and it makes it pretty annoying (not impossible) to use a web scraper there. I made a web scraper for it in the past and bypassed Incapsula using puppeteer, remote captcha solving using the Holz API, and some puppeteer-extra plugins. Using the Android App API ensures valid results even if they change their web player and makes it easier to use.
+Wakanim does not use a real API on the web version and instead, all the content is rendered server side. They also use Incapsula to protect their site, and it makes it pretty annoying (not impossible) to use a web scraper there. I made a web scraper for it in the past and bypassed Incapsula using [puppeteer](https://pptr.dev/), remote captcha solving using [Holz](https://github.com/Frooastside/Holz) and [Holz-Desktop](https://github.com/Frooastside/Holz-Desktop) (with a public instance hosted at [holz.wolkeneis.dev](https://holz.wolkeneis.dev)), and some puppeteer-extra plugins. Using the Android App API ensures valid results even if they change their web player and makes it easier to use.
 
 ## Reversing the API
 
@@ -196,12 +196,12 @@ client_id=wakanim.android.test2
 &grant_type=password
 &response_type=code+id_token+token
 &client_secret=FA2P0X10
-&username=EMAIL
-&password=PASSWORD
+&username=<EMAIL>
+&password=<PASSWORD>
 &scope=email+openid+profile+offline_access+read
 &redirect_uri=wakanimandroidapp://callback
-&nonce=2c24dd32-af93-4ba5-aa83-f54fbb489f8b
-&state=463ee844-0284-4cc2-83fc-1188c8e1997d
+&nonce=<SOME RANDOM UUID>
+&state=<SOME RANDOM UUID>
 ```
 
 But it would be too simple just using that and getting an access token. If we do that, we get the same `{"error":"invalid_client"}` response as without a body. So before digging into the native library, I thought I would search where p1 actually gets called from. It was as easy as searching for the token URL path (`/core/connect/token`) that is found also in `WakanimWebClient` and stored as a static variable. After searching for usages of it, I traced it back to `WakanimWebClient$i1.class`.
@@ -222,7 +222,7 @@ public j a(String... var1) {
 ```
 
 > **Note**
-> When working with decompiled code it is good to know that,
+> When working with this decompiled code it is good to know that,
 > 1. the standard java HTTP implementation lets you write the request body between connection.connect() and calling any response related method, like in this case the getResponseCode() method
 > 1. the java compiler is simplifying a lot of stuff if more information is not required and in this case, it is also obfuscated which makes working with it more unpleasant
 
@@ -440,11 +440,60 @@ So exactly what we expected. With that information, we can actually reconstruct 
 
 when run we're left with this, the actual `client_secret` value that gets used instead of `FA2P0X10`: `sypzbgkAPqTd9qrZ12oP`.
 
+So after retriving the full request body, I tried the to find out what rules we have to follow to actually get a response. And it turns out you only need the bare minimum HTTP Headers and any User-Agent also we should not forget the Content-Type `application/x-www-form-urlencoded`, no custom Headers are required. The body is bit more tricky. I thought the specification requires URL encoded keys and values. And also the MDN web docs state that: 
+
+>`application/x-www-form-urlencoded`: the keys and values are encoded in key-value tuples separated by '&', with a '=' between the key and the value. Non-alphanumeric characters in both keys and values are URL encoded: this is the reason why this type is not suitable to use with binary data (use multipart/form-data instead)[^form_urlencoded]
+
+[^form_urlencoded]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
+
+**But with this endpoint you actually don't url encode any keys and for the keys only the `email`, `password` and `redirect_uri` field**. In the end it should look something like this:
+
+```http
+POST http://account.wakanim.tv/core/connect/token HTTP/1.1
+Host: account.wakanim.tv
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 300
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, br
+User-Agent: PostmanRuntime/7.32.3
+
+client_id=wakanim.android.test2&grant_type=password&response_type=code+id_token+token&client_secret=sypzbgkAPqTd9qrZ12oP&username=<URL ENCODED EMAIL>&password=<URL ENCODED PASSWORD>&scope=email+openid+profile+offline_access+read&redirect_uri=wakanimandroidapp%3A%2F%2Fcallback&nonce=<RANDOM UUID>&state=<RANDOM UUID>
+```
+
+The response should be a json object that looks somthing like this:
+
+```json
+{
+    "access_token": "<JWT Authorization Token>",
+    "expires_in": 21600,
+    "token_type": "Bearer",
+    "refresh_token": "<32 digit refresh token>"
+}
+```
+
+The refresh token allows you to request more tokens after the token expired after 21600 seconds like the request above with some small changes:
+
+```http
+POST http://account.wakanim.tv/core/connect/token HTTP/1.1
+Host: account.wakanim.tv
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 300
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, br
+User-Agent: PostmanRuntime/7.32.3
+
+client_id=wakanim.android.test2&grant_type=refresh_token&refresh_token=<32 digit refresh token>&response_type=code+id_token+token&client_secret=sypzbgkAPqTd9qrZ12oP&scope=email+openid+profile+offline_access+read&redirect_uri=wakanimandroidapp%3A%2F%2Fcallback&nonce=<RANDOM UUID>&state=<RANDOM UUID>
+```
+
+The access token now allows you to make all the requests you like with the Bearer HTTP Header with the included access token. Some Endpoints are documented in this repository, including the [Core Endpoint](./reference/wakanim_core.yaml) and the [API Endpoint](./reference/wakanim_api.yaml). The API Endpoint is responsible for all the Content Stuff, while the Core Endpoint is what we already used to get our access token.
+
 ### Troubleshooting
 
 #### Manually setting the Proxy of the Android Emulator
 
-In my case, getting the Emulator to use a Proxy was harder than expected because it just did not want to use the proxy in the settings app. I gave it in the proxy settings but, there is an easy workaround using ADB. If you type in the following command, it sets the address you provide to the global proxy of the android system.
+In my case, getting the Emulator to use a Proxy was harder than expected because it just did not want to use the proxy in the settings app. But there is an easy workaround using ADB. If you type in the following command, it sets the address you provide to the global proxy of the android system.
 
 Enable:
 ```bash

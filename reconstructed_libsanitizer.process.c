@@ -11,11 +11,11 @@ long WakanimWebClient_process(long* environment, long wakanimWebClientClass, lon
 		long host = environment.CallObjectMethod(environment, urlClass, getHostMethod);
 		char* hostString = (char*)environment.GetStringUTFChars(environment, host, 0);
 		char expectedHost[100] = {};
-		Abstract_d(expectedHost, "YWNjb3VudC53YWthbmltLnR2"); //account.wakanim.com
+		Abstract_d(expectedHost, "YWNjb3VudC53YWthbmltLnR2");
 		int validHost = compareStrings(hostString, expectedHost);
 		if (int validHost == 0) {
-			long connectionClass = environment.GetObjectClass(environment, connection);				//URLConnection
-			long genericConnectionClass = environment.GetObjectClass(environment, connectionClass);	//Class<? extends URLConnection>
+			long connectionClass = environment.GetObjectClass(environment, connection);
+			long genericConnectionClass = environment.GetObjectClass(environment, connectionClass);
 			long getClassNameMethod = environment.GetMethodID(environment, genericConnectionClass, "getName", "()Ljava/lang/String;");
 			long connectionClassName = environment.CallObjectMethod(environment, genericConnectionClass, getClassNameMethod);
 			char* connectionClassNameString = (char*)environment.GetStringUTFChars(environment, connectionClassName, 0);
@@ -121,14 +121,14 @@ long WakanimWebClient_process(long* environment, long wakanimWebClientClass, lon
 						long stringConstructor = environment.GetMethodID(environment, stringClass, "<init>", "([B)V");
 						long clientSecret = environment.NewObject(environment, stringClass, stringConstructor, clientSecretArray);
 						char clientSecretBodyKey[100] = { 0 };
-						Abstract_d(&clientSecretBodyKey, "Y2xpZW50X3NlY3JldD0="); //client_secret=
+						Abstract_d(&clientSecretBodyKey, "Y2xpZW50X3NlY3JldD0=");
 						long clientSecretBodyValue = environment.GetStringUTFChars(environment, clientSecret, 0);
 						char clientSecretBody[100] = { 0 };
 						__vsprintf_chk(&clientSecretBody, 0, 100, "%s%s", [clientSecretBodyKey, clientSecretBodyValue]);
 						long clientSecretBodyString = environment.NewStringUTF(environment, clientSecretBody);
 						environment.ReleaseStringUTFChars(environment, clientSecret, clientSecretBodyValue);
 						char clientSecretBodyRegex[100] = { 0 };
-						__vsprintf_chk(&clientSecretBodyRegex, 0, 100, "%s%s", [clientSecretBodyKey, "[^&]+"]); //client_secret=[^&]+
+						__vsprintf_chk(&clientSecretBodyRegex, 0, 100, "%s%s", [clientSecretBodyKey, "[^&]+"]);
 						long clientSecretBodyRegexString = environment.NewStringUTF(environment, clientSecretBodyRegex);
 						long replaceFirstMethod = environment.GetMethodID(environment, stringClass, "replaceFirst", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
 						long updatedRequestBody = environment.CallObjectMethod(environment, requestBody, replaceFirstMethod, clientSecretBodyRegexString, clientSecretBodyString);

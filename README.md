@@ -370,7 +370,7 @@ uVar6 = (**(code **)(*param_9 + 0x30))(param_9,"java/net/URLConnection");
 > 
 > The VM initializes the function table, as shown by [Code Example 4-1](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html#wp2556).
 
-That means you can just take the offset, as an example we take the 0x30 from above, convert it to decimal (48), device it by 8 (6), and just take the 7th (don't forget counting from 0) function from the [JNI specification](./jni_spec.c), in this case `FindClass`.
+That means you can just take the offset, as an example we take the 0x30 from above, convert it to decimal (48), devide it by 8 (6), and just take the 7th (don't forget counting from 0) function from the [JNI specification](./jni_spec.c), in this case `FindClass`.
 
 So in the end, we can simplify the code from above into:
 
@@ -401,7 +401,7 @@ But the built-in method of Ghidra `ZEXT816` just takes the supplied 8 byte value
 Abstract_d(local_a8,(byte *)"YWNjb3VudC53YWthbmltLnR2");
 ```
 
-To be honest, I did not actually look through the implementation because I think it is unnecessary. Looking at `YWNjb3VudC53YWthbmltLnR2` gives me the feeling we are working with a base64 value here. And if we decode it ("account.wakanim.tv") and look into the next few lines (I changed it for understandability):
+To be honest, I did not actually look through the implementation because I think it is unnecessary. Looking at `YWNjb3VudC53YWthbmltLnR2` gives me the feeling we are working with a base64 value here. And if we decode it ("account.wakanim.tv") and look into the next few lines (I refactored it for understandability):
 
 ```java
 String expectedHost = base64Decode("YWNjb3VudC53YWthbmltLnR2"); // "account.wakanim.tv"

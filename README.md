@@ -40,16 +40,19 @@ Only doing that just allowed me to analyze unsecured HTTP traffic, but the App u
 adb push %userprofile%/Desktop/FiddlerRoot.cer /sdcard/FiddlerRoot.cer
 ```
 
-And on the emulator, installing it in the file explorer by clicking on it. I then checked if it is installed in the settings app under `Security & location > Advanced > Encryption & credentials > Trusted credentials > User`. However, I was still not finished yet, because starting with Android 5, user installed certificates are not trusted by default and to work with all apps, is has to be in the "System" Tab instead. Since Android 11, this gets even more enforced[^android-11-certificates].
+And on the emulator, installing it in the file explorer by clicking on it. I then checked if it is installed in the settings app under `Security & location > Advanced > Encryption & credentials > Trusted credentials > User`. However, I was still not finished yet, because starting with Android 5, user installed certificates are not trusted by default and to work with all apps, is has to be in the "System" Tab instead. Since Android 11, this gets even more enforced[^android-11-certificates]. The method shown below only works for emulators with API level < 29 (only up to Android 9) after that, it is harder to mount the system partition any you have to follow extra steps additional to `-writable-system`[^github-comment]
+
+[^android-11-certificates]: https://httptoolkit.com/blog/android-11-trust-ca-certificates/
+[^github-comment]: https://gist.github.com/pwlin/8a0d01e6428b7a96e2eb?permalink_comment_id=3927718#gistcomment-3927718
 
 > **Note**
 > Make sure you select "Apps and VPN" in the installation step or it will not be in the required directory.
 
-[^android-11-certificates]: https://httptoolkit.com/blog/android-11-trust-ca-certificates/
-
 ### Moving the certificate into the system certificate store
 
-User installed certificates are located under `/data/misc/user/0/cacerts-added/<hash>.o`, but it has to be in `/system/etc/security/cacerts/`. As the destination path is in the system partition, I had to start the emulator with the `-writeable-system` flag like this:
+#### Prepare emulator
+
+User installed certificates are located under `/data/misc/user/0/cacerts-added/<hash>.o`, but it has to be in `/system/etc/security/cacerts/`. As the destination path is in the system partition, I had to start the emulator with the `-writable-system` flag like this:
 
 ```bash
 %localappdata%/Android/Sdk/emulator/emulator.exe -writable-system -avd <AVD Name>
@@ -60,6 +63,36 @@ User installed certificates are located under `/data/misc/user/0/cacerts-added/<
 >```bash
 > %localappdata%/Android/Sdk/emulator/emulator.exe -list-avds
 >```
+
+Get yourself root permissions on the emulator:
+
+```bash
+adb root
+```
+
+#### Android API level > 28
+
+If you are on a device with API level > 28 (Starting from Android 10) you now have to make the system partition writable. 
+
+Then you have to disable secure boot verification:
+
+```bash
+adb shell avbctl disable-verification
+```
+
+reboot the device afterwards:
+
+```bash
+adb reboot
+```
+
+and remount the system partition before going to the next step:
+
+```bash
+adb remount
+```
+
+#### Copying the certificate
 
 Then in the last step, I copied the only file in `/data/misc/user/0/cacerts-added/` into the `/system/etc/security/cacerts/` folder using:
 ```

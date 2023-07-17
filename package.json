@@ -1,0 +1,42 @@
+{
+  "name": "wakanim-api",
+  "version": "0.1.0",
+  "description": "Moos API type definitions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frooastside/wakanim-api.git"
+  },
+  "author": "Frooastside",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Frooastside/wakanim-api/issues"
+  },
+  "homepage": "https://github.com/Frooastside/wakanim-api#readme",
+  "types": "types/index.ts",
+  "scripts": {
+    "openapi": "openapi-typescript \"reference/**/*.yaml\" --additional-properties --export-type --output .",
+    "lint": "eslint --ext ts .",
+    "lint:fix": "yarn lint --fix",
+    "pretty": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "openapi-typescript": "^6.2.8",
+    "prettier": "^2.8.8",
+    "typescript": "^5.1.6"
+  },
+  "lint-staged": {
+    "*.yaml": [
+      "prettier --write",
+      "openapi-typescript \"reference/**/*.yaml\" --export-type --output ."
+    ],
+    "*.{js,ts}": "eslint --ext ts --cache --fix",
+    "*.{js,ts,css,md,json}": "prettier --write"
+  }
+}

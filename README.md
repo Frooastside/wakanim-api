@@ -12,14 +12,14 @@ Wakanim does not use a real API on the web version and instead, all the content 
 
 - Windows (not strictly required, but some tools I used are only available on Windows.)
 - [Android Studio](https://developer.android.com/studio) with Emulator installed
-> **Warning**
-> Make sure you use a Google APIs Image instead of Google Play Store image because getting root on one of these requires additional steps.
+  > **Warning**
+  > Make sure you use a Google APIs Image instead of Google Play Store image because getting root on one of these requires additional steps.
 - Wakanim App installed on the Emulator
-> **Note**
-> Without the Google Play Store, you can get the App from your regular Android phone or online from something like [APK Mirror](https://www.apkmirror.com/apk/wakanim-production/wakanim/)
+  > **Note**
+  > Without the Google Play Store, you can get the App from your regular Android phone or online from something like [APK Mirror](https://www.apkmirror.com/apk/wakanim-production/wakanim/)
 - Android debug bridge (ADB) binaries
-> **Note**
-> These binaries get shipped with Android Studio and on Windows you usually can find them in `%localappdata%/Android/Sdk/platform-tools` 
+  > **Note**
+  > These binaries get shipped with Android Studio and on Windows you usually can find them in `%localappdata%/Android/Sdk/platform-tools`
 - Network Traffic analyzer like [Fiddler](https://www.telerik.com/download/fiddler) or [HttpToolkit](https://httptoolkit.com/) (I used Fiddler and the Tutorial expects you to use it if you want to follow.)
 - [Byte Code Viewer](https://github.com/Konloch/bytecode-viewer/releases)
 - [Ghidra](https://github.com/NationalSecurityAgency/ghidra/releases)
@@ -60,9 +60,10 @@ User installed certificates are located under `/data/misc/user/0/cacerts-added/<
 
 > **Note**
 > You can get a list of available AVDs (Android Virtual Device) with:
->```bash
+>
+> ```bash
 > %localappdata%/Android/Sdk/emulator/emulator.exe -list-avds
->```
+> ```
 
 Get yourself root permissions on the emulator:
 
@@ -72,7 +73,7 @@ adb root
 
 #### Android API level > 28
 
-If you are on a device with API level > 28 (Starting from Android 10) you now have to make the system partition writable. 
+If you are on a device with API level > 28 (Starting from Android 10) you now have to make the system partition writable.
 
 Then you have to disable secure boot verification:
 
@@ -95,15 +96,17 @@ adb remount
 #### Copying the certificate
 
 Then in the last step, I copied the only file in `/data/misc/user/0/cacerts-added/` into the `/system/etc/security/cacerts/` folder using:
+
 ```
 adb shell cp /data/misc/user/0/cacerts-added/<hash>.o /system/etc/security/cacerts/
 ```
 
 > **Note**
 > You can get the name of the certificate found in `/data/misc/user/0/cacerts/` by using
->```bash
+>
+> ```bash
 > adb shell ls /data/misc/user/0/cacerts-added/
->```
+> ```
 
 And after opening a website that uses HTTPS in chrome on the emulator, I immediately saw the traffic in Fiddler.
 
@@ -153,6 +156,7 @@ Unpinning setup completed
 ```
 
 The script I used has two methods.
+
 1. It automatically patches common methods of SSL Pinning by some libraries.
 1. It waits for a `SSLPeerUnverifiedException` exception to be thrown and just bypasses the whole method where it originated.
 
@@ -182,10 +186,11 @@ And yes, that is the whole request. It specified `Content-Type: application/x-ww
 
 So it was time to actually look into the code of it. I started by downloading [Byte Code Viewer](https://github.com/Konloch/bytecode-viewer/releases) and I collected the URL of the token endpoint (`https://account.wakanim.tv/core/connect/token`) and the exception that was thrown by the app (`com.wakanim.wakanimapp.test.wakanimWebclient.WakanimWebClient->p1`).
 
-#### (Reconstructed) `WakanimWebClient.class` 
+#### (Reconstructed) `WakanimWebClient.class`
+
 ```java
   ...
-  
+
   private void p1(X509TrustManagerExtensions trustManager, HttpsURLConnection connection, String... arguments) {
     String body = arguments.length > 0 ? arguments[0] : null;
     int returnCode = process(body, connection, trustManager);
@@ -196,7 +201,7 @@ So it was time to actually look into the code of it. I started by downloading [B
       throw new SSLPeerUnverifiedException(errorMessage.toString());
     }
   }
-  
+
   public static native int process(String body, URLConnection connection, X509TrustManagerExtensions trustManager);
 
   ...
@@ -205,17 +210,15 @@ So it was time to actually look into the code of it. I started by downloading [B
 Looking into the method and refactoring it a little bit reveals, that as I guessed, the signature verification does not happen in Java but in a native library. To be able to find out what which variables are, I again used Frida with the following script:
 
 ```javascript
-setTimeout(() =>  {
-  Java.perform(() => {
-    const wakanimWebClient = Java.use(
-      "com.wakanim.wakanimapp.test.wakanimWebclient.WakanimWebClient"
-    );
-    wakanimWebClient.p1.implementation = (trustManager, connection, arguments) => {
-      const returns = this.p1(trustManager, connection, arguments);
-      console.log("WakanimWebClient -> p1", arguments);
-      return returns;
-    };
-  });
+setTimeout(() => {
+  Java.perform(() => {
+    const wakanimWebClient = Java.use("com.wakanim.wakanimapp.test.wakanimWebclient.WakanimWebClient");
+    wakanimWebClient.p1.implementation = (trustManager, connection, arguments) => {
+      const returns = this.p1(trustManager, connection, arguments);
+      console.log("WakanimWebClient -> p1", arguments);
+      return returns;
+    };
+  });
 }, 0);
 ```
 
@@ -239,14 +242,15 @@ client_id=wakanim.android.test2
 
 But it would be too simple just using that and getting an access token. If we do that, we get the same `{"error":"invalid_client"}` response as without a body. So before digging into the native library, I thought I would search where p1 actually gets called from. It was as easy as searching for the token URL path (`/core/connect/token`) that is found also in `WakanimWebClient` and stored as a static variable. After searching for usages of it, I traced it back to `WakanimWebClient$i1.class`.
 
-#### (Decompiled) `WakanimWebClient$i1.class` 
+#### (Decompiled) `WakanimWebClient$i1.class`
+
 ```java
 public j a(String... var1) {
   ...
-  
-  connection.setConnectTimeout(60000);  
-  connection.connect();  
-  WakanimWebClient var43 = this.c;  
+
+  connection.setConnectTimeout(60000);
+  connection.connect();
+  WakanimWebClient var43 = this.c;
   WakanimWebClient.c(var43, WakanimWebClient.x(var43), connection, new String[]{var1[0]});
   responseCode = connection.getResponseCode();
 
@@ -256,16 +260,18 @@ public j a(String... var1) {
 
 > **Note**
 > When working with this decompiled code it is good to know that,
+>
 > 1. the standard java HTTP implementation lets you write the request body between connection.connect() and calling any response related method, like in this case the getResponseCode() method
 > 1. the java compiler is simplifying a lot of stuff if more information is not required and in this case, it is also obfuscated which makes working with it more unpleasant
 
 At the first look it looks pretty complicated but after analyzing it a bit it just simplifies to following pseudocode:
 
 #### (Reconstructed) `WakanimWebClient$i1.class`
+
 ```java
 public Response makeRequest(String requestBody) {
   ...
-  
+
   connection.setConnectTimeout(60000);
   connection.connect();
   webClient.p1(webClient.getTrustManager(), connection, requestBody);
@@ -278,6 +284,7 @@ public Response makeRequest(String requestBody) {
 So that is the last proof that we actually need to tackle the native lib. But what lib? Finding that out was pretty easy, because in the constructor of the `WakanimWebClient` class, there is this expression `System.loadLibrary("sanitizer");` and inside the APK there are multiple versions (for the different architectures) of the file `libsanitizer.so` I used Ghidra for the analysis of the library, but you can also use other Tools like IDA. The library exports a lot of functions, but the one that we're interested in is obviously `Java_com_wakanim_wakanimapp_test_wakanimWebclient_WakanimWebClient_process`. Ghidra can reconstruct C code from the assembly, and I started by looking at the function declaration in the [decompiled C code](./decompiled_libsanitizer.process.c):
 
 #### (Reconstructed) libsanitizer.so → process
+
 ```c
 
 undefined8 Java_com_wakanim_wakanimapp_test_wakanimWebclient_WakanimWebClient_process
@@ -312,7 +319,7 @@ Ok first let's replace `undefined8` with the appropriate data type, an unsigned 
 
 But that still leaves us with 5 instead of the 3 parameters we would expect, right? Actually no, because the used JNI (Java Native Interface) specification states:
 
-> The JNI interface pointer is the first argument to native methods. The JNI interface pointer is of type _JNIEnv_. The second argument differs depending on whether the native method is static or nonstatic. The second argument to a nonstatic native method is a reference to the object. The second argument to a static native method is a reference to its Java class.[^jni-specification-design]
+> The JNI interface pointer is the first argument to native methods. The JNI interface pointer is of type *JNIEnv*. The second argument differs depending on whether the native method is static or nonstatic. The second argument to a nonstatic native method is a reference to the object. The second argument to a static native method is a reference to its Java class.[^jni-specification-design]
 
 [^jni-specification-design]: https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/design.html
 
@@ -354,20 +361,21 @@ uint64 Java_com_wakanim_wakanimapp_test_wakanimWebclient_WakanimWebClient_proces
     iVar3 = strcmp(__s1,local_a8);
     if (iVar3 == 0) {
 	    ...
-	
+
 		...
 }
 ```
 
-That looks very complicated, but if you understand what it actually does, you can easily understand pretty much all you need to be able to send a token request yourself. Let's look at the first line: 
+That looks very complicated, but if you understand what it actually does, you can easily understand pretty much all you need to be able to send a token request yourself. Let's look at the first line:
+
 ```c
 uVar6 = (**(code **)(*param_9 + 0x30))(param_9,"java/net/URLConnection");
 ```
 
 `uVar6` Got initialized in the first section of the function and is of the type `uint64`. `(**(code **)(*param_9 + 0x30))` also looks complicated but is actually just a fancy way to say: "give me the function at an offset of 0x30 of `param_9` (the JNI environment as we found out earlier)". You might ask: "what function is at an offset of 0x30?". That's a good question, and the answer can again be found in the JNI specifications:
 
-> Each function is accessible at a fixed offset through the _JNIEnv_ argument. The _JNIEnv_ type is a pointer to a structure storing all JNI function pointers.
-> 
+> Each function is accessible at a fixed offset through the *JNIEnv* argument. The *JNIEnv* type is a pointer to a structure storing all JNI function pointers.
+>
 > The VM initializes the function table, as shown by [Code Example 4-1](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html#wp2556).
 
 That means you can just take the offset, as an example we take the 0x30 from above, convert it to decimal (48), devide it by 8 (6), and just take the 7th (don't forget counting from 0) function from the [JNI specification](./jni_spec.c), in this case `FindClass`.
@@ -434,7 +442,7 @@ byte local_108[16] = ZEXT816(0);
 byte local_118[16] = ZEXT816(0);
 ```
 
-So `local_118` will probably be a string and the output of `FUN_00103e00`, because right now it is just empty, and before it gets used, there is nothing else accessing it, so it has to be filled by this function. The next argument is just the number 100, and we don't know yet for what it stands. But the next string `%s%s%s` looks interesting, this syntax is also used in Java by the `String.format` function and in C by `printf`. Also, there are exactly 3 arguments next, that got created in the process function before. So my guess, it just combines these 3 values into one string and stores it in `local_118`.  When we look at the code, it actually can get reduced down to this line:
+So `local_118` will probably be a string and the output of `FUN_00103e00`, because right now it is just empty, and before it gets used, there is nothing else accessing it, so it has to be filled by this function. The next argument is just the number 100, and we don't know yet for what it stands. But the next string `%s%s%s` looks interesting, this syntax is also used in Java by the `String.format` function and in C by `printf`. Also, there are exactly 3 arguments next, that got created in the process function before. So my guess, it just combines these 3 values into one string and stores it in `local_118`. When we look at the code, it actually can get reduced down to this line:
 
 ```c
 __vsprintf_chk(local_118, 0, 100, "%s%s%s", [uVar11, uVar12, uVar13]);
@@ -442,7 +450,7 @@ __vsprintf_chk(local_118, 0, 100, "%s%s%s", [uVar11, uVar12, uVar13]);
 
 And guess what that functions does:
 
-> The interface __vsprintf_chk() shall function in the same way as the interface vsprintf(), except that __vsprintf_chk() shall check for stack overflow before computing a result.[^__vsprintf_chk]
+> The interface **vsprintf_chk() shall function in the same way as the interface vsprintf(), except that **vsprintf_chk() shall check for stack overflow before computing a result.[^__vsprintf_chk]
 
 [^__vsprintf_chk]: https://refspecs.linuxbase.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/libc---vsprintf-chk-1.html
 
@@ -473,9 +481,9 @@ So exactly what we expected. With that information, we can actually reconstruct 
 
 when run we're left with this, the actual `client_secret` value that gets used instead of `FA2P0X10`: `sypzbgkAPqTd9qrZ12oP`.
 
-So after retriving the full request body, I tried the to find out what rules we have to follow to actually get a response. And it turns out you only need the bare minimum HTTP Headers and any User-Agent also we should not forget the Content-Type `application/x-www-form-urlencoded`, no custom Headers are required. The body is bit more tricky. I thought the specification requires URL encoded keys and values. And also the MDN web docs state that: 
+So after retriving the full request body, I tried the to find out what rules we have to follow to actually get a response. And it turns out you only need the bare minimum HTTP Headers and any User-Agent also we should not forget the Content-Type `application/x-www-form-urlencoded`, no custom Headers are required. The body is bit more tricky. I thought the specification requires URL encoded keys and values. And also the MDN web docs state that:
 
->`application/x-www-form-urlencoded`: the keys and values are encoded in key-value tuples separated by '&', with a '=' between the key and the value. Non-alphanumeric characters in both keys and values are URL encoded: this is the reason why this type is not suitable to use with binary data (use multipart/form-data instead)[^form_urlencoded]
+> `application/x-www-form-urlencoded`: the keys and values are encoded in key-value tuples separated by '&', with a '=' between the key and the value. Non-alphanumeric characters in both keys and values are URL encoded: this is the reason why this type is not suitable to use with binary data (use multipart/form-data instead)[^form_urlencoded]
 
 [^form_urlencoded]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
 
@@ -498,10 +506,10 @@ The response should be a json object that looks somthing like this:
 
 ```json
 {
-    "access_token": "<JWT Authorization Token>",
-    "expires_in": 21600,
-    "token_type": "Bearer",
-    "refresh_token": "<32 digit refresh token>"
+  "access_token": "<JWT Authorization Token>",
+  "expires_in": 21600,
+  "token_type": "Bearer",
+  "refresh_token": "<32 digit refresh token>"
 }
 ```
 
@@ -528,16 +536,16 @@ WakanimWebClient.forge(userId, forge, kid, "wakanim.android.test2");
 
 ```js
 import { createCipheriv } from "crypto";
-import {format} from "util";
+import { format } from "util";
 
 function calculateForge(userId: string, iv: string, kid: string, client: string): string {
   const d0c_format = "@%s@Dew#@WAK@%s@N1M@%s";
   const d0c_output = format(d0c_format, client, kid, userId);
   const encryptionKey = Buffer.from("0484032047dd341820aa19621bdc3459", "hex");
-  let cipher = createCipheriv('aes-128-cbc', encryptionKey, Buffer.from(iv, "ascii"));
-  let encrypted = cipher.update(d0c_output, 'ascii', 'base64');
+  let cipher = createCipheriv("aes-128-cbc", encryptionKey, Buffer.from(iv, "ascii"));
+  let encrypted = cipher.update(d0c_output, "ascii", "base64");
   console.log(encrypted);
-  encrypted += cipher.final('base64');
+  encrypted += cipher.final("base64");
   return encrypted;
 }
 ```
@@ -549,11 +557,13 @@ function calculateForge(userId: string, iv: string, kid: string, client: string)
 In my case, getting the Emulator to use a Proxy was harder than expected because it just did not want to use the proxy in the settings app. But there is an easy workaround using ADB. If you type in the following command, it sets the address you provide to the global proxy of the android system.
 
 Enable:
+
 ```bash
 adb shell settings put global http_proxy "10.0.2.2:8888"
 ```
 
 Disable:
+
 ```bash
 adb shell settings put global http_proxy ":0"
 ```

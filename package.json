@@ -13,6 +13,10 @@
   },
   "homepage": "https://github.com/Frooastside/wakanim-api#readme",
   "types": "types/index.ts",
+  "files": [
+    "/reference",
+    "/types"
+  ],
   "scripts": {
     "openapi": "openapi-typescript \"reference/**/*.yaml\" --additional-properties --export-type --output .",
     "lint": "eslint --ext ts .",

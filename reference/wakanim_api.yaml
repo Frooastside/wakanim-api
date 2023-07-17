@@ -11,7 +11,7 @@ servers:
 paths:
   /user:
     get:
-      summary: User Information
+      summary: User Profile
       tags: []
       responses:
         '200':
@@ -1113,7 +1113,7 @@ paths:
     parameters: []
   /catalogue/continuewatching:
     get:
-      summary: Catalogue continue watching
+      summary: Continue Watching
       tags: []
       responses:
         '200':
@@ -1730,7 +1730,7 @@ paths:
         - API_Key: []
   /catalogue/latestepisodes:
     get:
-      summary: Catalogue latest episodes
+      summary: Latest Episodes
       tags: []
       responses:
         '200':
@@ -4190,7 +4190,7 @@ paths:
         - API_Key: []
   /catalogue/latestfreeepisodes:
     get:
-      summary: Catalogue latest free episodes
+      summary: Latest Free Episodes
       tags: []
       responses:
         '200':
@@ -6662,7 +6662,7 @@ paths:
           name: s
   /catalogue/mostpopularshows:
     get:
-      summary: Calalogue most popular shows
+      summary: Most Popular Shows
       tags: []
       responses:
         '200':
@@ -7440,7 +7440,7 @@ paths:
         - API_Key: []
   /catalogue/randomplaylist:
     get:
-      summary: Catalogue random playlist
+      summary: Random Playlist
       tags: []
       responses:
         '200':
@@ -9595,7 +9595,7 @@ paths:
         - API_Key: []
   /catalogue/episodestreamingfree:
     get:
-      summary: Catalogue free episode streaming
+      summary: Free Stream
       tags: []
       responses:
         '200':
@@ -10176,7 +10176,7 @@ paths:
           description: Episode Id
   /catalogue/episodemanifestfree:
     get:
-      summary: Your GET endpoint
+      summary: Free Manifest
       tags: []
       responses:
         '200':
@@ -10201,7 +10201,7 @@ paths:
           name: manifest
   /catalogue/nextepisode:
     post:
-      summary: Catalogue next episode
+      summary: Next Episode
       operationId: post-catalogue-nextepisode
       responses:
         '200':
@@ -10511,7 +10511,7 @@ paths:
                   description: Current episodeId
   /catalogue/previousepisode:
     post:
-      summary: ''
+      summary: Previous Episode
       operationId: post-catalogue-previousepisode
       responses:
         '200':
@@ -10813,7 +10813,7 @@ paths:
         description: ''
   /catalogue/showWithCCBundle:
     get:
-      summary: Your GET endpoint
+      summary: Show with CC Bundle
       tags: []
       responses:
         '200':
@@ -12944,7 +12944,7 @@ paths:
     parameters: []
   /catalogue/similarplaylist:
     get:
-      summary: Your GET endpoint
+      summary: Similar Playlists
       tags: []
       responses:
         '200':

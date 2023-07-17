@@ -6,6 +6,7 @@
 
 export type paths = {
   "/connect/token": {
+    /** Access Token */
     post: operations["post-connect-token"];
   };
 };
@@ -26,6 +27,7 @@ export type external = Record<string, never>;
 
 export type operations = {
 
+  /** Access Token */
   "post-connect-token": {
     requestBody?: {
       content: {
@@ -55,6 +57,13 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
+          "application/json": {
+            access_token?: string;
+            expires_in?: number;
+            /** @default Bearer */
+            token_type?: string;
+            refresh_token?: string;
+          };
         };
       };
     };

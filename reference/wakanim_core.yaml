@@ -11,12 +11,25 @@ servers:
 paths:
   /connect/token:
     post:
-      summary: ""
+      summary: Access Token
       operationId: post-connect-token
       responses:
         "200":
           description: OK
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  expires_in:
+                    type: integer
+                  token_type:
+                    type: string
+                    default: Bearer
+                  refresh_token:
+                    type: string
       requestBody:
         content:
           application/x-www-form-urlencoded:

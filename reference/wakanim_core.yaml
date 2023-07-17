@@ -3,20 +3,39 @@ x-stoplight:
   id: r84qu01fpotds
 info:
   title: Wakanim Core API
-  version: "1.0"
-  description: ""
+  version: '1.0'
+  description: ''
 servers:
-  - url: "http://account.wakanim.tv/core"
+  - url: 'http://account.wakanim.tv/core'
     description: Core Endpoint
 paths:
   /connect/token:
     post:
-      summary: ""
+      summary: Access Token
       operationId: post-connect-token
       responses:
-        "200":
+        '200':
           description: OK
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjBKWGp4cm1qb1hHWG96UUlDWi12aTdKUUFBVSIsImtpZCI6IjBKWGp4cm1qb1hHWG96UUlDWi12aTdKUUFBVSJ9.eyJpc3MiOiJodHRwczovL2FjY291bnQud2FrYW5pbS50di9jb3JlLyIsImF1ZCI6Imh0dHBzOi8vYWNjb3VudC53YWthbmltLnR2L2NvcmUvcmVzb3VyY2VzIiwiZXhwIjoxNjg5NjQyMzQ5LCJuYmYiOjE2ODk2MjA3NDksImNsaWVudF9pZCI6Indha2FuaW0uYW5kcm9pZC50ZXN0MiIsIndzaWQiOiJERSIsInNjb3BlIjpbInByb2ZpbGUiLCJlbWFpbCIsIm9mZmxpbmVfYWNjZXNzIiwicmVhZCIsIm9wZW5pZCJdLCJzdWIiOiI5ZGYzODNiOC03OTc3LTRmMGEtYmZjOS03NzVkNzZkYzFjMjAiLCJhdXRoX3RpbWUiOjE2ODI1MjE3NjUsImlkcCI6Imlkc3J2IiwianRpIjoiMjE0NmEwNWY4MWMyMmEyMzc1NmFiYzFmMDNhMjk5MjMiLCJhbXIiOlsicGFzc3dvcmQiXX0.tCmv6lk51XIJSGWgKYTQVDAMJDJKkLYTVbPORL26xLeTPB19H3qVua0H-rK50DPUWFUjSDFq47pIAfEelzuRUDm6KKTl1KSCHEloJK9CnerxrRYZsOksQAyRmK5rVRrCObFQYfyRl8YCio2jCgXpJOxP3wPz8cc4sHD2Pmbq_dKRdorf3ZPDstWwKfRAjz800HIuoLGak64C08B9MFfjDQqfyjDG-aa4lAYKE80DZ3-HIp5fgWvQpDyn5NQZ_CHhkr9Ed07QGwkSMBuepfi2U7prNQiiNDuO-ot7VDPZG6py6aQBWSNj-XyWAod-msLcI4F7mPsbegJedXBjWA68PbC88EP1SDe9Cv8iiCsCaDuek6hVSTxJeKwmCh1pg6NvSbWkMAABgtEt8KqB152EoorP2J5oERq2nXsukthO2EP4T1OtUQxIo6WS_oM7maKNUgp65OIszn5FfVo0EzhCypTBBhhvaILg_3dBXiNmmOEekbi4tXdAkHXWz7jVSInBJeFmihv69OPb_b1q5c-jEWpxUKeKYJ2cGp9dTK3BJiQ6AzvW4aEFlTVUNQnSkEq-o11GEL6bAd05o_oqH8wA6Dv8zI9ALW3uIsKzQ4zDm1i9L1v1zfN96M2Icko6InD4J1dUu_xHSUSYBkgDPHBCl5PACu8iImO4ZHsHSOSr4UM
+                    expires_in: 21600
+                    token_type: Bearer
+                    refresh_token: a4aa8049648727d5d77a237f2606790e
+                properties:
+                  access_token:
+                    type: string
+                  expires_in:
+                    type: integer
+                  token_type:
+                    type: string
+                    default: Bearer
+                  refresh_token:
+                    type: string
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -44,14 +63,14 @@ paths:
                   default: email+openid+profile+offline_access+read
                 redirect_uri:
                   type: string
-                  default: "wakanimandroidapp://callback"
+                  default: 'wakanimandroidapp://callback'
                 nonce:
                   type: string
                   format: uuid
                 state:
                   type: string
                   format: uuid
-        description: ""
+        description: ''
 components:
   schemas: {}
   securitySchemes: {}

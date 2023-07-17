@@ -2,15 +2,8 @@
   "name": "Wakanim API",
   "description": "",
   "spectralExtends": [],
-  "extends": [
-    "cHJqOjEyMzU4Ng"
-  ],
-  "formats": [
-    "oas2",
-    "oas3",
-    "oas3.0",
-    "oas3.1"
-  ],
+  "extends": ["cHJqOjEyMzU4Ng"],
+  "formats": ["oas2", "oas3", "oas3.0", "oas3.1"],
   "aliases": {},
   "rules": {},
   "extendedStyleguides": [

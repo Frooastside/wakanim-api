@@ -522,6 +522,26 @@ client_id=wakanim.android.test2&grant_type=refresh_token&refresh_token=<32 digit
 
 The access token now allows you to make all the requests you like with the Bearer HTTP Header with the included access token. Some Endpoints are documented in this repository, including the [Core Endpoint](./reference/wakanim_core.yaml) and the [API Endpoint](./reference/wakanim_api.yaml). The API Endpoint is responsible for all the Content Stuff, while the Core Endpoint is what we already used to get our access token.
 
+```java
+WakanimWebClient.forge(userId, forge, kid, "wakanim.android.test2");
+```
+
+```js
+import { createCipheriv } from "crypto";
+import {format} from "util";
+
+function calculateForge(userId: string, iv: string, kid: string, client: string): string {
+  const d0c_format = "@%s@Dew#@WAK@%s@N1M@%s";
+  const d0c_output = format(d0c_format, client, kid, userId);
+  const encryptionKey = Buffer.from("0484032047dd341820aa19621bdc3459", "hex");
+  let cipher = createCipheriv('aes-128-cbc', encryptionKey, Buffer.from(iv, "ascii"));
+  let encrypted = cipher.update(d0c_output, 'ascii', 'base64');
+  console.log(encrypted);
+  encrypted += cipher.final('base64');
+  return encrypted;
+}
+```
+
 ### Troubleshooting
 
 #### Manually setting the Proxy of the Android Emulator

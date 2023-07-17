@@ -7566,6 +7566,12 @@ paths:
           in: query
           name: Id
           description: Episode Id
+        - schema:
+            type: number
+          in: header
+          name: X-Player
+          description: '2'
+          required: true
   /catalogue/episodemanifestfree:
     get:
       summary: Free Manifest

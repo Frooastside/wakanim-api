@@ -1,6 +1,4 @@
 openapi: 3.1.0
-x-stoplight:
-  id: k8lhne2bfd5ui
 info:
   title: Wakanim API
   version: "1.0"

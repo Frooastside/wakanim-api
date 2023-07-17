@@ -3,7 +3,6 @@
  * Do not make direct changes to the file.
  */
 
-
 export type paths = {
   "/user": {
     /** User Profile */
@@ -124,8 +123,8 @@ export type components = {
       endDateBought?: string;
       midRollTime?: null;
       leaps?: null;
-      parsedLeaps?: (Record<string, never>)[];
-      tags?: (components["schemas"]["Tag"])[];
+      parsedLeaps?: Record<string, never>[];
+      tags?: components["schemas"]["Tag"][];
       alreadyBought?: boolean;
       isDtrAvailable?: boolean;
       isFairplayDTRAvailable?: boolean;
@@ -161,7 +160,7 @@ export type components = {
     Show: {
       $id?: string;
       isOnGoingShow?: string;
-      seasons?: (components["schemas"]["Season"])[];
+      seasons?: components["schemas"]["Season"][];
       relatedNews?: string;
       followedByUsers?: number;
       synopsis?: string;
@@ -219,8 +218,8 @@ export type components = {
       classification?: components["schemas"]["Classification"];
       redirectToShowItem?: string;
       redirectToSeason?: string;
-      genres?: (components["schemas"]["Genre"])[];
-      tags?: (string)[];
+      genres?: components["schemas"]["Genre"][];
+      tags?: string[];
       startProduction?: string;
       availableWithSVOD?: boolean;
       availableInSVODSince?: string;
@@ -233,7 +232,7 @@ export type components = {
     };
     Season: {
       $id?: string;
-      episodes?: (components["schemas"]["Episode"])[];
+      episodes?: components["schemas"]["Episode"][];
       nbTotalEpisodes?: number;
       nbTotalEpisodesBought?: number;
       nbTotalToBoughtEpisodes?: number;
@@ -301,7 +300,6 @@ export type components = {
 export type external = Record<string, never>;
 
 export type operations = {
-
   /** User Profile */
   "get-user": {
     responses: {
@@ -338,34 +336,34 @@ export type operations = {
               birthday?: string;
               gender?: number;
               promoCampaign?: null;
-              v2_AdvertTag?: (Record<string, never>)[];
-              v2_AdvertTag1?: (Record<string, never>)[];
-              v2_Articles?: (Record<string, never>)[];
-              v2_ArticlesRelated?: (Record<string, never>)[];
-              v2_ArticlesRelated1?: (Record<string, never>)[];
-              v2_BillingPlan?: (Record<string, never>)[];
-              v2_BillingPlan1?: (Record<string, never>)[];
-              v2_BillingSourceCard?: (Record<string, never>)[];
-              v2_BillingSourceCard1?: (Record<string, never>)[];
-              v2_BillingTaxRate?: (Record<string, never>)[];
-              v2_BillingTaxRate1?: (Record<string, never>)[];
-              v2_BillingTaxRateHistory?: (Record<string, never>)[];
-              v2_BillingTaxRule?: (Record<string, never>)[];
-              v2_BillingTaxRule1?: (Record<string, never>)[];
-              v2_BillingTaxRuleHistory?: (Record<string, never>)[];
-              v2_ContestPhysicalAddress?: (Record<string, never>)[];
-              v2_Podcast_Following?: (Record<string, never>)[];
-              v2_ROGroup?: (Record<string, never>)[];
-              v2_ROGroup1?: (Record<string, never>)[];
-              v2_ShowEpisodeItemBought?: (Record<string, never>)[];
-              v2_ShowItem_Following?: (Record<string, never>)[];
-              v2_SmsCode?: (Record<string, never>)[];
-              v2_SmsCode1?: (Record<string, never>)[];
-              v2_StripePaymentSource?: (Record<string, never>)[];
-              v2_StripePaymentSource1?: (Record<string, never>)[];
-              v2_UserNote?: (Record<string, never>)[];
-              v2_UserNote1?: (Record<string, never>)[];
-              v2_UserNote2?: (Record<string, never>)[];
+              v2_AdvertTag?: Record<string, never>[];
+              v2_AdvertTag1?: Record<string, never>[];
+              v2_Articles?: Record<string, never>[];
+              v2_ArticlesRelated?: Record<string, never>[];
+              v2_ArticlesRelated1?: Record<string, never>[];
+              v2_BillingPlan?: Record<string, never>[];
+              v2_BillingPlan1?: Record<string, never>[];
+              v2_BillingSourceCard?: Record<string, never>[];
+              v2_BillingSourceCard1?: Record<string, never>[];
+              v2_BillingTaxRate?: Record<string, never>[];
+              v2_BillingTaxRate1?: Record<string, never>[];
+              v2_BillingTaxRateHistory?: Record<string, never>[];
+              v2_BillingTaxRule?: Record<string, never>[];
+              v2_BillingTaxRule1?: Record<string, never>[];
+              v2_BillingTaxRuleHistory?: Record<string, never>[];
+              v2_ContestPhysicalAddress?: Record<string, never>[];
+              v2_Podcast_Following?: Record<string, never>[];
+              v2_ROGroup?: Record<string, never>[];
+              v2_ROGroup1?: Record<string, never>[];
+              v2_ShowEpisodeItemBought?: Record<string, never>[];
+              v2_ShowItem_Following?: Record<string, never>[];
+              v2_SmsCode?: Record<string, never>[];
+              v2_SmsCode1?: Record<string, never>[];
+              v2_StripePaymentSource?: Record<string, never>[];
+              v2_StripePaymentSource1?: Record<string, never>[];
+              v2_UserNote?: Record<string, never>[];
+              v2_UserNote1?: Record<string, never>[];
+              v2_UserNote2?: Record<string, never>[];
               secret?: string;
             };
             accountType?: number;
@@ -394,7 +392,7 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": (components["schemas"]["Show"])[];
+          "application/json": components["schemas"]["Show"][];
         };
       };
       /** @description Forbidden */
@@ -428,7 +426,7 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": (components["schemas"]["Episode"])[];
+          "application/json": components["schemas"]["Episode"][];
         };
       };
       /** @description Forbidden */
@@ -441,7 +439,7 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": (components["schemas"]["Episode"])[];
+          "application/json": components["schemas"]["Episode"][];
         };
       };
     };
@@ -457,7 +455,7 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": (components["schemas"]["Episode"])[];
+          "application/json": components["schemas"]["Episode"][];
         };
       };
       /** @description Forbidden */
@@ -470,7 +468,7 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": (components["schemas"]["Show"])[];
+          "application/json": components["schemas"]["Show"][];
         };
       };
       /** @description Forbidden */
@@ -489,12 +487,12 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": ({
-              $id?: string;
-              name?: string;
-              series?: (components["schemas"]["Show"])[];
-              id?: number;
-            })[];
+          "application/json": {
+            $id?: string;
+            name?: string;
+            series?: components["schemas"]["Show"][];
+            id?: number;
+          }[];
         };
       };
       /** @description Forbidden */
@@ -621,12 +619,12 @@ export type operations = {
       /** @description OK */
       200: {
         content: {
-          "application/json": ({
-              $id?: string;
-              name?: string;
-              series?: (components["schemas"]["Show"])[];
-              id?: number;
-            })[];
+          "application/json": {
+            $id?: string;
+            name?: string;
+            series?: components["schemas"]["Show"][];
+            id?: number;
+          }[];
         };
       };
       /** @description Forbidden */
